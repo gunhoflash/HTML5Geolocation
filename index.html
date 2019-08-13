@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>HTML5 Geolocation</title>
+	</head>
+	<body>
+		<h1>HTML5 Geolocation</h1>
+		<p id="latitude"></p>
+		<p id="longitude"></p>
+		<script>
+			var element_latitude = document.querySelector('#latitude');
+			var element_longitude = document.querySelector('#longitude');
+
+			var geo_options = {
+				enableHighAccuracy: true,
+				maximumAge: 30000,
+				timeout: 27000
+			};
+
+			function positionUpdate(position) {
+				element_latitude.textContent = 'latitude: ' + position.coords.latitude;
+				element_longitude.textContent = 'longitude: ' + position.coords.longitude;
+			}
+
+			function geo_error() {
+				alert('Geolocation not supported');
+			}
+
+			if ('geolocation' in navigator) {
+				navigator.geolocation.getCurrentPosition(positionUpdate);
+				navigator.geolocation.watchPosition(positionUpdate, geo_error, geo_options);
+			} else {
+				geo_error();
+			}
+		</script>
+	</body>
+</html>
